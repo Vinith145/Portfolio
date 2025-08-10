@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>  
+   <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Vini's Portfolio</title>
+  </head>
+<body>
+    <!-- Animated Intro Section -->
+    <div class="intro" id="intro">
+        <div class="intro-content" id="introContent">
+            <h1>Balakumar Kamaraj</h1>
+            <p>Software Engineer</p>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Navigation -->
+        <nav id="mainNav">
+            <div class="nav-brand" id="navBrand">
+                <h1>Balakumar Kamaraj</h1>
+                <p>Software Engineer</p>
+            </div>
+            
+            <ul class="nav-links">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <!-- Page Sections -->
+        <section id="home" class="active">
+            <h2>Welcome to My Portfolio</h2>
+            <p>This is the home section where you can introduce yourself and provide a brief overview of your work.</p>
+        </section>
+        
+        <section id="about">
+            <h2>About Me</h2>
+            <p>Here you can write about your background, education, and professional journey.</p>
+        </section>
+        
+        <section id="projects">
+            <h2>My Projects</h2>
+            <p>Showcase your best work with descriptions and links to live projects or code repositories.</p>
+        </section>
+        
+        <section id="skills">
+            <h2>Skills</h2>
+            <p>List your technical skills, tools, and technologies you're proficient with.</p>
+        </section>
+        
+        <section id="contact">
+            <h2>Contact Me</h2>
+            <p>Provide ways for visitors to get in touch with you, such as email, social media, or a contact form.</p>
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-links a');
+            const intro = document.getElementById('intro');
+            const sections = document.querySelectorAll('section');
+            const navBrand = document.getElementById('navBrand');
+            
+            // Make nav brand clickable
+            navBrand.addEventListener('click', function() {
+                // Reload the page and scroll to top
+                window.location.href = "#home";
+                window.location.reload();
+            });
+            
+            // Initialize - show home section
+            showSection('home');
+            
+            // Remove intro after animations complete
+            setTimeout(() => {
+                intro.style.display = 'none';
+            }, 3500);
+            
+            // Handle navigation clicks
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    setActiveLink(targetId);
+                    showSection(targetId);
+                    
+                    // Smooth scroll to section
+                    document.getElementById(targetId).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            
+            // Show section with animation
+            function showSection(sectionId) {
+                sections.forEach(section => {
+                    if (section.id === sectionId) {
+                        section.classList.add('active');
+                    } else {
+                        section.classList.remove('active');
+                    }
+                });
+            }
+            
+            // Set active link
+            function setActiveLink(targetId) {
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${targetId}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+            
+            // Change active link on scroll
+            window.addEventListener('scroll', function() {
+                const scrollPosition = window.scrollY + 100;
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionBottom = sectionTop + section.offsetHeight;
+                    const sectionId = section.getAttribute('id');
+                    
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                        setActiveLink(sectionId);
+                        showSection(sectionId);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
